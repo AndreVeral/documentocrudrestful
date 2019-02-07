@@ -50,7 +50,7 @@ public class DocumentoServiceTest {
 	
 	@Test
 	public void testQuandoCriaDocumento() {
-		Documento documento = new Documento("Titulo documento 1", "Corpo do teste");
+		Documento documento = new Documento("Titulo documento", "Corpo do teste");
 		when(dao.insertDocumento(documento)).thenReturn(1d);
 		boolean criaDocumentoServico = service.insertDocumentoServico(documento);
 		assertTrue(criaDocumentoServico);
