@@ -94,6 +94,6 @@ public class DocumentoDaoTest {
 	@Test
 	public void deveRetornarTodosOsDocumentosMock() {
 		when(documentoDao.getTodosDocumentos()).thenReturn(documentos);
-		
+		assertNotNull(documentos);
 	}
 }

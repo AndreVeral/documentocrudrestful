@@ -1,15 +1,10 @@
 package br.com.digitro.documentocrud.model.test;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
-
-
 import br.com.digitro.documentocrud.dao.DocumentoDao;
 import br.com.digitro.documentocrud.dao.impl.DocumentoDaoImpl;
 import br.com.digitro.documentocrud.model.Documento;
@@ -53,24 +48,4 @@ public class DocumentoServiceTest {
 		boolean criaDocumentoServico = service.insertDocumentoServico(documento);
 		assertTrue(criaDocumentoServico);
 	}
-	
-	
-//	public void prepararMock() {
-//		documentoDao = Mockito.mock(DocumentoDao.class);
-//		Mockito.when(documentoDao.getDocumento()).thenReturner) invocation.getArguments()[(criarDocumentoMock());
-//		
-//		
-//	}
-//	private Documento criarDocumentoMock() {
-//		Documento documento = new Documento();
-//		documento.setTitulo("teste get");
-//		return documento;
-//	}
-//
-//	public void testaGetDocumento() {
-//		Documento documento = documentoDao.getDocumento();
-//		
-//		assertEquals("teste get", documento.getTitulo());
-//		
-//	}
 }
