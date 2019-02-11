@@ -1,5 +1,7 @@
 package br.com.digitro.documentocrud.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.management.RuntimeErrorException;
@@ -58,18 +60,20 @@ public class DocumentoServiceImpl implements DocumentoService{
 		return false;
 	}
 
-	public Documento getDocumento() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Set<Documento> getTodosDocumentos() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Documento> getTodosDocumentos() {
+		List<Documento> documentos = new ArrayList<Documento>();
+		if(!documentos.isEmpty()) {
+			documentos = dao.getTodosDocumentos();
+			return documentos;
+		}else {
+			throw new RuntimeException("Documentos não encontrados.");
+		}
+		
 	}
 
 	public Documento getDocumentoPorId(int id) {
-		// TODO Auto-generated method stub
+		Documento documento =  new Documento();
+		
 		return null;
 	}
 	

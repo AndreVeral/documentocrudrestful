@@ -1,24 +1,38 @@
 package br.com.digitro.documentocrud.model.test;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import javax.print.Doc;
 
 import br.com.digitro.documentocrud.dao.DocumentoDao;
 import br.com.digitro.documentocrud.dao.impl.DocumentoDaoImpl;
 import br.com.digitro.documentocrud.model.Documento;
 import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+import static org.mockito.Mockito.*;
 
+import static org.junit.Assert.*;
+@RunWith(MockitoJUnitRunner.class)
 public class DocumentoDaoTest {
 	private DocumentoDao documentoDao;
-	private DocumentoDaoImpl documentoDaoImpl;
+	private List<Documento> documentos;
+
+	@Before
+	public void setUp() {
+		documentoDao = mock(DocumentoDaoImpl.class);
+		documentos = new ArrayList<Documento>();
+	}
 
 	private String deveGerarTextoAleatorio() {
 		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		StringBuilder salt = new StringBuilder();
 		Random rnd = new Random();
-		while (salt.length() < 18) { // numero de caracteres gerados.
+		while (salt.length() < 18) { 
 			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
 			salt.append(SALTCHARS.charAt(index));
 		}
@@ -73,9 +87,13 @@ public class DocumentoDaoTest {
 	@Test
 	public void deveRetornarTodosOsDocumentos() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
-		Set<Documento> documentos = daoTestImpl.getTodosDocumentos();
+		List<Documento> documentos = daoTestImpl.getTodosDocumentos();
 		assertNotNull(documentos);
+
+	}
+	@Test
+	public void deveRetornarTodosOsDocumentosMock() {
+		when(documentoDao.getTodosDocumentos()).thenReturn(documentos);
 		
 	}
-
 }

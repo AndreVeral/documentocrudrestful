@@ -1,5 +1,6 @@
 package test.main;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -81,7 +82,7 @@ public class Main {
 	
 	public void deveRetornarTodosOsDocumentos() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
-		Set<Documento> documentos = daoTestImpl.getTodosDocumentos();
+		List<Documento> documentos = daoTestImpl.getTodosDocumentos();
 		for (Documento documento : documentos) {
 			System.out.println(documento.getId());
 		}

@@ -1,13 +1,14 @@
 package br.com.digitro.documentocrud.service;
 
+import java.util.List;
 import java.util.Set;
 
 import br.com.digitro.documentocrud.dao.DocumentoDao;
 import br.com.digitro.documentocrud.model.Documento;
 
 public interface DocumentoService {
-	Documento getDocumento();
-	Set<Documento> getTodosDocumentos();
+	
+	List<Documento> getTodosDocumentos();
 	Documento getDocumentoPorId(int id);
 	boolean insertDocumentoServico(Documento documento);
 	boolean updateDocumentoServico(Documento documento);

@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
-import java.util.Set;
+
 
 import br.com.digiro.documentocrud.factory.ConnectionFactory;
 import br.com.digitro.documentocrud.dao.DocumentoDao;
@@ -16,12 +16,12 @@ import br.com.digitro.documentocrud.model.Documento;
 
 public class DocumentoDaoImpl implements DocumentoDao{
 	
-	public Set getTodosDocumentos() {
+	public List getTodosDocumentos() {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM documentos_timestamp;");
-			Set<Documento> documentos = new HashSet<Documento>();
+			List<Documento> documentos = new ArrayList<Documento>();
 			
 			while(rs.next()) {
 				Documento documento = extrairDocumentoDeResultSet(rs);

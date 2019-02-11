@@ -44,10 +44,8 @@ public class DocumentoServiceTest {
 		when(dao.deleteDocumento(1)).thenReturn(1d);
 		boolean deleteDocumentoServico = service.deleteDocumentoServico(1);
 		Assert.assertTrue(deleteDocumentoServico);
-		
-		
 	}
-	
+
 	@Test
 	public void testQuandoCriaDocumento() {
 		Documento documento = new Documento("Titulo documento", "Corpo do teste");
