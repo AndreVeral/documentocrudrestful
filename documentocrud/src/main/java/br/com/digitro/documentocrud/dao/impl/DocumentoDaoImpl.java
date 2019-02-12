@@ -113,7 +113,7 @@ public class DocumentoDaoImpl implements DocumentoDao{
 		documento.setId(rs.getInt("id"));
 		documento.setTitulo(rs.getString("titulo"));
 		documento.setTexto(rs.getString("corpo"));
-		documento.setDataCriacao(rs.getDate("dataCriacao"));
+		//documento.setDataCriacao(rs.getDate("dataCriacao"));
 		return documento;
 	}
 }

@@ -24,15 +24,15 @@ public class DocumentoServiceTest {
 		dao = mock(DocumentoDaoImpl.class);
 		service.setDao(dao);
 	}
-
-	@Test
-	public void testQuandoUmTituloValidoForPesquisadoNoDocumento() {
-		Documento documentoMock = new Documento();
-		when(documentoMock.getId()).thenReturn(7);
-		verify(documentoMock).setTitulo("Titulo Mock");
-		Assert.assertEquals(documentoMock.getTitulo(), "Titulo Mock");
-	}
 	
+	@Test
+	public void testQuandoDeletaDocumentoComIdNegativo() {
+		
+		when(dao.deleteDocumento(-1)).thenReturn(1d);
+		boolean deleteDocumentoServico = service.deleteDocumentoServico(1);
+		//Assert.assertTrue(deleteDocumentoServico);
+	}
+
 	@Test
 	public void testQuandoDeletaDocumento() {
 		
@@ -40,12 +40,28 @@ public class DocumentoServiceTest {
 		boolean deleteDocumentoServico = service.deleteDocumentoServico(1);
 		Assert.assertTrue(deleteDocumentoServico);
 	}
-
+	
 	@Test
 	public void testQuandoCriaDocumento() {
 		Documento documento = new Documento("Titulo documento", "Corpo do teste");
 		when(dao.insertDocumento(documento)).thenReturn(1d);
 		boolean criaDocumentoServico = service.insertDocumentoServico(documento);
 		assertTrue(criaDocumentoServico);
+	}
+	
+	@Test
+	public void testQuandoCriaDocumentoTituloMenorQue5Caracteres() {
+		Documento documento = new Documento("Titu", "Corpo do teste");
+		when(dao.insertDocumento(documento)).thenReturn(1d);
+		//boolean criaDocumentoServico = service.insertDocumentoServico(documento);
+		//assertTrue(criaDocumentoServico);
+	}
+	
+	@Test
+	public void testQuandoCriaDocumentoTituloVazio() {
+		Documento documento = new Documento(null, "Corpo do teste");
+		when(dao.insertDocumento(documento)).thenReturn(1d);
+		//boolean criaDocumentoServico = service.insertDocumentoServico(documento);
+		//assertTrue(criaDocumentoServico);
 	}
 }
