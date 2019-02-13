@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 
 import br.com.digiro.documentocrud.factory.ConnectionFactory;
 import br.com.digitro.documentocrud.dao.DocumentoDao;
@@ -33,9 +34,10 @@ public class DocumentoDaoImpl implements DocumentoDao{
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
+			throw new RuntimeException("Erro. Banco está vazio.");
 		}
 				
-		return null;
+		//return null;
 	}
 
 	public Documento getDocumentoPorId(int id) {
@@ -66,11 +68,13 @@ public class DocumentoDaoImpl implements DocumentoDao{
 			ps.setString(2, documento.getTexto());
 			int i  = ps.executeUpdate();
 			if(i == 1) {
+				ps.close();
 				return 1d; 
 			}
-			ps.close();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
+			//throw new RuntimeException("Erro. Documento Não inserido");
 		}
 		return 0d;
 	}

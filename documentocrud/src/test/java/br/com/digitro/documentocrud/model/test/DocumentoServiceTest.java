@@ -28,9 +28,9 @@ public class DocumentoServiceTest {
 	@Test
 	public void testQuandoDeletaDocumentoComIdNegativo() {
 		
-		when(dao.deleteDocumento(-1)).thenReturn(1d);
-		boolean deleteDocumentoServico = service.deleteDocumentoServico(1);
-		//Assert.assertTrue(deleteDocumentoServico);
+		//when(dao.deleteDocumento(-1)).thenReturn(1d);
+		boolean deleteDocumentoServico = service.deleteDocumentoServico(-1);
+		Assert.assertTrue(deleteDocumentoServico);
 	}
 
 	@Test
