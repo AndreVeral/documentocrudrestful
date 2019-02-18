@@ -3,7 +3,13 @@ package br.com.digitro.documentocrud.model.test;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mockito.junit.MockitoJUnitRunner;
 import br.com.digitro.documentocrud.dao.DocumentoDao;
 import br.com.digitro.documentocrud.dao.impl.DocumentoDaoImpl;
@@ -63,5 +69,13 @@ public class DocumentoServiceTest {
 		when(dao.insertDocumento(documento)).thenReturn(1d);
 		//boolean criaDocumentoServico = service.insertDocumentoServico(documento);
 		//assertTrue(criaDocumentoServico);
+	}
+	@Test
+	public void deveListarTodosDocumentosRest() {
+		List<Documento> documentos = new ArrayList<>();
+		service = new DocumentoServiceImpl();
+		documentos = service.getTodosDocumentos();
+		assertNotNull("Objeto nulo", documentos);;
+		
 	}
 }

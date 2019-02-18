@@ -2,12 +2,24 @@ package br.com.digitro.documentocrud.model;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
 public class Documento {
 private int id;
 private String titulo;
-private String corpo;
-private Date dataCriacao;
+private String texto;
+private Date dataInicio;
+private Date dataFim;
 
+public Date getDataFim() {
+	return dataFim;
+}
+public void setDataFim(Date dataFim) {
+	this.dataFim = dataFim;
+}
+public void setDataInicio(Date dataInicio) {
+	this.dataInicio = dataInicio;
+}
 public String getTitulo() {
 	return titulo;
 }
@@ -15,37 +27,33 @@ public void setTitulo(String titulo) {
 	this.titulo = titulo;
 }
 public String getTexto() {
-	return corpo;
+	return texto;
 }
 public void setTexto(String texto) {
-	this.corpo = texto;
+	this.texto = texto;
 }
 public int getId() {
 	return id;
 }
-public Date getDataCriacao() {
-	return dataCriacao;
+public Date getDataInicio() {
+	return dataInicio;
 }
-
 public void setId(int id) {
 	this.id = id;
 }
-//public void setDataCriacao(Date dataCriacao) {
-//	this.dataCriacao = dataCriacao;
-//}
 public Documento() {
 	// TODO Auto-generated constructor stub
 }
-
-//public Documento(int id, String titulo, String texto, Date data) {
-//	this.id = id;
-//	this.titulo = titulo;
-//	this.corpo = texto;
-//	this.dataCriacao = data;
-//}
-
-public Documento(String titulo, String corpo) {
+public Documento(String titulo, String texto, Date dataInicio, Date dataFim) {
 	this.titulo = titulo;
-	this.corpo = corpo;
+	this.texto = texto;
+	this.dataInicio = dataInicio;
+	this.dataFim = dataFim;
+
+}
+
+public Documento(String titulo, String texto) {
+	this.titulo = titulo;
+	this.texto = texto;	
 }
 }

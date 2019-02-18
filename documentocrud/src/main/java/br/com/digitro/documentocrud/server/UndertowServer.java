@@ -23,7 +23,7 @@ public class UndertowServer {
 		
 		DeploymentInfo servletBuilder = Servlets.deployment();
 		servletBuilder.setClassLoader(UndertowServer.class.getClassLoader())
-			.setContextPath("/doc")
+			.setContextPath("/basedocumentos")
 			.setDeploymentName("doc.war")
 			.addServlets(servletContainer);
 		

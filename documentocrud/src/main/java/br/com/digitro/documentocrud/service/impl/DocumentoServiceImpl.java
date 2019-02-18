@@ -62,7 +62,7 @@ public class DocumentoServiceImpl implements DocumentoService{
 
 	public List<Documento> getTodosDocumentos() {
 		List<Documento> documentos = new ArrayList<Documento>();
-		if(!documentos.isEmpty()) {
+		if(documentos.isEmpty()) {
 			documentos = dao.getTodosDocumentos();
 			return documentos;
 		}else {

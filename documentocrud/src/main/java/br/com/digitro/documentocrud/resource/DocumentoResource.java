@@ -1,5 +1,6 @@
 package br.com.digitro.documentocrud.resource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,18 +11,19 @@ import javax.ws.rs.core.MediaType;
 
 
 import br.com.digitro.documentocrud.model.Documento;
+import br.com.digitro.documentocrud.service.DocumentoService;
+import br.com.digitro.documentocrud.service.impl.DocumentoServiceImpl;
 
-@Path("documentos")
+@Path("/documentos")
 public class DocumentoResource {
-
+	private DocumentoService documentoService;
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Documento> hello() throws Exception {
-//		Pessoa pessoa = new Pessoa();
-//		pessoa.setId(44325L);
-//		pessoa.setNome("Joãozinho");
-//		return Arrays.asList(pessoa);
-		return null;
+	@Produces("application/json")
+	public List<Documento> deveListarTodosDocumentos() throws Exception {
+		List<Documento> documentos = new ArrayList<>();
+		documentoService = new DocumentoServiceImpl();
+		documentos = documentoService.getTodosDocumentos();
+		return documentos;
 	}
-	
+
 }
