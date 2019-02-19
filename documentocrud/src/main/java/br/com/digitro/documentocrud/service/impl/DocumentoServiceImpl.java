@@ -1,6 +1,14 @@
 package br.com.digitro.documentocrud.service.impl;
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +22,7 @@ import br.com.digitro.documentocrud.service.DocumentoService;
 public class DocumentoServiceImpl implements DocumentoService{
 	
 	private DocumentoDao dao = new DocumentoDaoImpl();
+	private Documento documento =  new Documento();
 	
 
 
@@ -59,6 +68,14 @@ public class DocumentoServiceImpl implements DocumentoService{
 		}
 		return false;
 	}
+	
+//	public void deveFormatarData (Documento documento) {
+//		String dataAntiga = documento.getDataInicio();
+//		LocalDateTime dataFormatada = LocalDateTime.parse(dataAntiga, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//		Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String dataFormatadaString = formatter.format(dataFormatada);
+//		documento.setDataInicio(dataFormatadaString);
+//	}
 
 	public List<Documento> getTodosDocumentos() {
 		List<Documento> documentos = new ArrayList<Documento>();

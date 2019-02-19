@@ -1,10 +1,10 @@
-package br.com.digitro.documentocrud.model;
+package br.com.digitro.documentocrud.model.dto;
 
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
-public class Documento {
+public class DocumentoDTO {
 private int id;
 private String titulo;
 private String texto;
@@ -41,10 +41,10 @@ public String getDataInicio() {
 public void setId(int id) {
 	this.id = id;
 }
-public Documento() {
+public DocumentoDTO() {
 	// TODO Auto-generated constructor stub
 }
-public Documento(String titulo, String texto, String dataInicio, Date dataFim) {
+public DocumentoDTO(String titulo, String texto, String dataInicio, Date dataFim) {
 	this.titulo = titulo;
 	this.texto = texto;
 	this.dataInicio = dataInicio;
@@ -52,7 +52,7 @@ public Documento(String titulo, String texto, String dataInicio, Date dataFim) {
 
 }
 
-public Documento(String titulo, String texto) {
+public DocumentoDTO(String titulo, String texto) {
 	this.titulo = titulo;
 	this.texto = texto;	
 }

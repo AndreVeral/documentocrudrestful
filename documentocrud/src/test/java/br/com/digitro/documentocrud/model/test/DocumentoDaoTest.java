@@ -80,68 +80,85 @@ public class DocumentoDaoTest {
 	}
 
 	@Test
-	public void deveGravarUmDocumentoNoBanco() {
+	public void deveGravarUmDocumentoNoBancoTest() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.insertDocumento(criarDocumento());
 		Assert.assertEquals("Saída", 1, d, 0.0001);
 	}
 	
 	@Test
-	public void deveFalharGravarUmDocumentoNoBanco() {
+	public void deveFalharGravarUmDocumentoNoBancoTest() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.insertDocumento(FalharDocumento());
 		assertEquals(0, d, 0.0001);
 	}
 	
 	@Test
-	public void deveDeletarUmDocumentoDoBanco() {
+	public void deveDeletarUmDocumentoDoBancoTest() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.deleteDocumento(29);
 		Assert.assertEquals(1, d, 0.0001);
 	}
 	
 	@Test
-	public void deveFalharDeletarUmDocumentoDoBanco() {
+	public void deveFalharDeletarUmDocumentoDoBancoTest() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.deleteDocumento(50);
 		Assert.assertEquals(0, d, 0.0001);
 	}
 
 	@Test
-	public void deveAtualizarUmDocumentoDoBanco() {
+	public void deveAtualizarUmDocumentoDoBancoTest() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.updateDocumento(deveAlterarDocumentoExistente());
 		Assert.assertEquals(1, d, 0.0001);	
 	}
 	
 	@Test
-	public void deveFalharAtualizarUmDocumentoDoBanco() {
+	public void deveFalharAtualizarUmDocumentoDoBancoTest() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.updateDocumento(deveFalharAlterarDocumentoExistente());
 		Assert.assertEquals(0, d, 0.0001);	
 	}
 
 	@Test
-	public void deveRetornarUmDocumentoPorId() {
+	public void deveRetornarUmDocumentoPorIdTest() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		Documento d = daoTestImpl.getDocumentoPorId(9);
 		Assert.assertNotNull(d.getClass());
 	}
 	
 	@Test
-	public void deveFalharRetornarUmDocumentoPorId() {
+	public void deveFalharRetornarUmDocumentoPorIdTest() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		Documento d = daoTestImpl.getDocumentoPorId(100);
 		//Assert.assertNotNull(d.getClass());
 	}
 	
 	@Test
-	public void deveRetornarTodosOsDocumentos() {
+	public void deveRetornarTodosOsDocumentosTest() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		List<Documento> documentos = daoTestImpl.getTodosDocumentos();
 		assertNotNull(documentos);
 
 	}
+	
+	@Test
+	public void deveFiltarDocumentoPorTituloTest() {
+		
+	}
+	
+	@Test
+	public void deveFiltrarDocumentoPorTextoTest() {
+		
+	}
+	
+	@Test
+	public void deveFiltrarDocumentoPorIntervaloDataTest() {
+		
+	}
+	
+	
 	
 //	@Test(expected=RuntimeException.class)
 //	public void deveFalharRetornarTodosOsDocumentos() throws SQLException {
