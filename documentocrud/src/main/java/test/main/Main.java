@@ -29,7 +29,7 @@ public class Main {
 
 	}
 
-	public Documento criarDocumento() {
+	public Documento criarDocumentoCaracteresAleatorios() {
 		Documento documento = new Documento();
 		documento.setTitulo(deveGerarTextoAleatorio());
 		documento.setTexto(deveGerarTextoAleatorio());
@@ -45,14 +45,13 @@ public class Main {
 	}
 	public void deveGravarUmDocumentoNoBanco() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
-		double d = daoTestImpl.insertDocumento(criarDocumento());
+		double d = daoTestImpl.insertDocumento(criarDocumentoCaracteresAleatorios());
 		if(d == 1) {
 			System.out.println("Sucesso");
 		}else {
 			System.out.println("Erro");
 		}
 	}
-
 	public void deveDeletarUmDocumentoNoBanco() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = daoTestImpl.deleteDocumento(0);

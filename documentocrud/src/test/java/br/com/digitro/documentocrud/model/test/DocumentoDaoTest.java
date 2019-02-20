@@ -25,12 +25,15 @@ public class DocumentoDaoTest {
 	private DocumentoDao documentoDao;
 	private DocumentoDao documentoDaoMock;
 	private List<Documento> documentos;
+	private Documento documento;
 
 	@Before
 	public void setUp() {
 		documentoDaoMock = mock(DocumentoDaoImpl.class, Mockito.CALLS_REAL_METHODS);
 		documentoDao = new DocumentoDaoImpl();
 		documentos = new ArrayList<Documento>();
+		documento = new Documento();
+		
 	}
 
 	private String deveGerarTextoAleatorio() {
@@ -44,7 +47,7 @@ public class DocumentoDaoTest {
 		String saltStr = salt.toString();
 		return saltStr;
 	}
-	
+
 	public Documento deveAlterarDocumentoExistente() {
 		Documento documento = new Documento();
 		//DocumentoDaoTest daoTestImpl = new DocumentoDaoTest();
@@ -54,7 +57,7 @@ public class DocumentoDaoTest {
 		return documento;
 
 	}
-	
+
 	public Documento deveFalharAlterarDocumentoExistente() {
 		Documento documento = new Documento();
 		//DocumentoDaoTest daoTestImpl = new DocumentoDaoTest();
@@ -64,99 +67,107 @@ public class DocumentoDaoTest {
 		return documento;
 
 	}
-	
-	public Documento criarDocumento() {
-		Documento documento = new Documento();
+
+	public Documento deveCriarDocumentoComCamposAleatorios() {
 		documento.setTitulo(deveGerarTextoAleatorio());
 		documento.setTexto(deveGerarTextoAleatorio());
 		return documento;
 	}
 	
-	public Documento FalharDocumento() {
-		Documento documento = new Documento();
-		documento.setTitulo(null);
-		documento.setTexto(deveGerarTextoAleatorio());
-		return documento;
+	public Documento deveCriarDocumentoComCamposNaoAleatorios() {
+		String titulo = "titulo";
+		String texto = "texto";
+		Documento documentoNaoAleatorio = new Documento(titulo,texto);
+		return documentoNaoAleatorio;
+	}
+	
+	public Documento deveCriarDocumentoNulo() {
+		String titulo = null;
+		String texto = null;
+		Documento documentoNulo = new Documento(titulo, texto);
+		return documentoNulo;
+	}
+
+//	public Documento deveFalharDocumento() {
+//		documento.setTitulo(null);
+//		documento.setTexto(deveGerarTextoAleatorio());
+//		return documento;
+//	}
+
+	@Test
+	public void testDeveGravarUmDocumentoAleatorioNoBanco() {
+		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
+		double d = documentoDao.insertDocumento(deveCriarDocumentoComCamposAleatorios());
+		Assert.assertEquals("Saída", 1, d, 0.0001);
 	}
 
 	@Test
-	public void deveGravarUmDocumentoNoBancoTest() {
-		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
-		double d = documentoDao.insertDocumento(criarDocumento());
-		Assert.assertEquals("Saída", 1, d, 0.0001);
+	public void testDeveGravarUmDocumentoNaoAleatorioNoBanco() {
+		
+		Documento documentoNaoAleatorio = deveCriarDocumentoComCamposNaoAleatorios();
+		documentoDao.insertDocumento(documentoNaoAleatorio);
+		for (Documento documento : documentos) {
+			if (documento.getTitulo().equalsIgnoreCase("titulo") && documento.getTexto().equalsIgnoreCase("texto")) {
+				assertEquals(documentoNaoAleatorio, documento);
+			}
+		}
+		
 	}
-	
+//	@Test(expected = IllegalArgumentException.class)
+//	public void testGerarExcecaoAoGravarUmDocumentoNoBanco() {
+//		documentoDao.insertDocumento(deveCriarDocumentoNulo());
+//	}
+
 	@Test
-	public void deveFalharGravarUmDocumentoNoBancoTest() {
-		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
-		double d = documentoDao.insertDocumento(FalharDocumento());
-		assertEquals(0, d, 0.0001);
-	}
-	
-	@Test
-	public void deveDeletarUmDocumentoDoBancoTest() {
+	public void testDeveDeletarUmDocumentoDoBanco() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.deleteDocumento(29);
 		Assert.assertEquals(1, d, 0.0001);
 	}
-	
+
 	@Test
-	public void deveFalharDeletarUmDocumentoDoBancoTest() {
+	public void testDeveFalharDeletarUmDocumentoDoBanco() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.deleteDocumento(50);
 		Assert.assertEquals(0, d, 0.0001);
 	}
 
 	@Test
-	public void deveAtualizarUmDocumentoDoBancoTest() {
+	public void testdeveAtualizarUmDocumentoDoBanco() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.updateDocumento(deveAlterarDocumentoExistente());
 		Assert.assertEquals(1, d, 0.0001);	
 	}
-	
+
 	@Test
-	public void deveFalharAtualizarUmDocumentoDoBancoTest() {
+	public void testDeveFalharAtualizarUmDocumentoDoBanco() {
 		//DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		double d = documentoDao.updateDocumento(deveFalharAlterarDocumentoExistente());
 		Assert.assertEquals(0, d, 0.0001);	
 	}
 
 	@Test
-	public void deveRetornarUmDocumentoPorIdTest() {
+	public void testDeveRetornarUmDocumentoPorId() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		Documento d = daoTestImpl.getDocumentoPorId(9);
 		Assert.assertNotNull(d.getClass());
 	}
-	
+
 	@Test
-	public void deveFalharRetornarUmDocumentoPorIdTest() {
+	public void testDeveFalharRetornarUmDocumentoPorId() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		Documento d = daoTestImpl.getDocumentoPorId(100);
 		//Assert.assertNotNull(d.getClass());
 	}
-	
+
 	@Test
-	public void deveRetornarTodosOsDocumentosTest() {
+	public void testDeveRetornarTodosOsDocumentos() {
 		DocumentoDaoImpl daoTestImpl = new DocumentoDaoImpl();
 		List<Documento> documentos = daoTestImpl.getTodosDocumentos();
 		assertNotNull(documentos);
 
 	}
-	
-	@Test
-	public void deveFiltarDocumentoPorTituloTest() {
-		
-	}
-	
-	@Test
-	public void deveFiltrarDocumentoPorTextoTest() {
-		
-	}
-	
-	@Test
-	public void deveFiltrarDocumentoPorIntervaloDataTest() {
-		
-	}
+}
 	
 	
 	
@@ -172,4 +183,4 @@ public class DocumentoDaoTest {
 //		when(documentoDao.getTodosDocumentos()).thenReturn(documentos);
 //		assertNotNull(documentos);
 //	}
-}
+

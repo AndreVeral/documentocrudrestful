@@ -5,6 +5,7 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -29,6 +30,14 @@ public class DocumentoServiceTest {
 		service = new DocumentoServiceImpl();
 		dao = mock(DocumentoDaoImpl.class);
 		service.setDao(dao);
+		Documento documento = new Documento();
+	}
+	
+	public Documento deveCriarDocumentoNulo() {
+		String titulo = null;
+		String texto = null;
+		Documento documentoNulo = new Documento(titulo, texto);
+		return documentoNulo;
 	}
 	
 	@Test
@@ -71,11 +80,44 @@ public class DocumentoServiceTest {
 		//assertTrue(criaDocumentoServico);
 	}
 	@Test
-	public void deveListarTodosDocumentosRest() {
+	public void testDeveListarTodosDocumentosRest() {
 		List<Documento> documentos = new ArrayList<>();
 		service = new DocumentoServiceImpl();
 		documentos = service.getTodosDocumentos();
 		assertNotNull("Objeto nulo", documentos);;
 		
 	}
+	@Test
+	public void testDeveFiltarDocumentoPorTitulo() {
+		Documento documento = new Documento();
+		
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeveGerarUmaExcecaoAoFiltrarPorTitulo() {
+		
+	}
+	
+	@Test
+	public void testDeveFiltrarDocumentoPorTextoTest() {
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeveGerarUmaExcecaoAoFiltrarPorTexto() {
+		
+	}
+	
+	@Test
+	public void testDeveFiltrarDocumentoPorIntervaloDataTest() {
+		//List<Documento> documentos = service.getDocumentosPorIntervaloData();
+		//assertNotNull(documentos);
+	
+}
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeveGerarExcecaoAoFiltrarPorIntervaloData() {
+		 
+	}
+
 }
