@@ -4,7 +4,7 @@ package br.com.digitro.documentocrud.model.test;
 import org.junit.*;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertArrayEquals;
+
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
