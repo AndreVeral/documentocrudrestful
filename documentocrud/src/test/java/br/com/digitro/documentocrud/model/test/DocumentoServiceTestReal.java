@@ -3,6 +3,8 @@ package br.com.digitro.documentocrud.model.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.ws.WebServiceException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +34,27 @@ public class DocumentoServiceTestReal {
 		Documento documentoNulo = new Documento(titulo, texto);
 		return documentoNulo;
 	}
+		
 	
-	@Test
-	public void testDeve
+	
+	@Test(expected = WebServiceException.class)
+	public void testDeveGerarExcecaoAoPesquisarDataInicialComFormatoInvalido() {
+		
+	}
+	@Test(expected = WebServiceException.class)
+	public void testDeveGerarExcecaoAoPesquisarDataFimComFormatoInvalido() {
+		
+	}
+	@Test(expected = WebServiceException.class)
+	public void testDeveGerarExcecaoAoPesquisarPeriodoComFormatoInvalido() {
+		
+	}
+	@Test(expected = WebServiceException.class)
+	public void testDeveGerarExcecaoAoPesquisarTituloMaiorQue250Caracteres() {
+		
+	}
+	@Test(expected = WebServiceException.class)
+	public void testDeveGerarExcecaoAoPesquisarTextoMaiorQue500Caracteres() {
+		
+	}
 }

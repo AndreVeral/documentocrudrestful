@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import br.com.digitro.documentocrud.dao.DocumentoDao;
 import br.com.digitro.documentocrud.dao.impl.DocumentoDaoImpl;
 import br.com.digitro.documentocrud.model.Documento;
+import br.com.digitro.documentocrud.service.DocumentoService;
+import br.com.digitro.documentocrud.service.impl.DocumentoServiceImpl;
 
 public class Main {
 	//	private String deveGerarTextoAleatorio(){
@@ -34,6 +37,17 @@ public class Main {
 		documento.setTitulo(deveGerarTextoAleatorio());
 		documento.setTexto(deveGerarTextoAleatorio());
 		return documento;
+	}
+	
+	public void deveGravarDocumentoPadrao() {
+		Documento documento = new Documento("titulo", "texto");
+		DocumentoService service = new DocumentoServiceImpl();
+		boolean resultado = service.insertDocumentoServico(documento);
+		if (resultado) {
+			System.out.println("Gravado");
+		}else {
+			System.out.println("Erro");
+		}
 	}
 	
 	private Documento deveAtualizarDocumentoExistente() {
@@ -89,6 +103,6 @@ public class Main {
 	}
 	public static void main(String[] args) {
 		Main m = new Main();
-		m.deveRetornarTodosOsDocumentos();
+		m.deveGravarDocumentoPadrao();
 	}
 }

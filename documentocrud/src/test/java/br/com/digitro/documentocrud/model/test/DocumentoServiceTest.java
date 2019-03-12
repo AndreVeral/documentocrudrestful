@@ -19,7 +19,7 @@ import br.com.digitro.documentocrud.service.DocumentoService;
 import br.com.digitro.documentocrud.service.impl.DocumentoServiceImpl;
 import static junit.framework.Assert.*;
 
-@RunWith(MockitoJUnitRunner.class)
+
 public class DocumentoServiceTest {
 	private DocumentoDao dao;
 	private DocumentoService service;
@@ -28,95 +28,87 @@ public class DocumentoServiceTest {
 	@Before
 	public void setUp() {
 		service = new DocumentoServiceImpl();
-		dao = mock(DocumentoDaoImpl.class);
 		service.setDao(dao);
 		Documento documento = new Documento();
 	}
-	
-	public Documento deveCriarDocumentoNulo() {
-		String titulo = null;
-		String texto = null;
-		Documento documentoNulo = new Documento(titulo, texto);
-		return documentoNulo;
-	}
-	
-	@Test
-	public void testQuandoDeletaDocumentoComIdNegativo() {
 		
-		//when(dao.deleteDocumento(-1)).thenReturn(1d);
-		boolean deleteDocumentoServico = service.deleteDocumentoServico(-1);
-		Assert.assertTrue(deleteDocumentoServico);
-	}
-
 	@Test
-	public void testQuandoDeletaDocumento() {
-		
-		when(dao.deleteDocumento(1)).thenReturn(1d);
-		boolean deleteDocumentoServico = service.deleteDocumentoServico(1);
-		Assert.assertTrue(deleteDocumentoServico);
-	}
-	
-	@Test
-	public void testQuandoCriaDocumento() {
-		Documento documento = new Documento("Titulo documento", "Corpo do teste");
-		when(dao.insertDocumento(documento)).thenReturn(1d);
-		boolean criaDocumentoServico = service.insertDocumentoServico(documento);
-		assertTrue(criaDocumentoServico);
-	}
-	
-	@Test
-	public void testQuandoCriaDocumentoTituloMenorQue5Caracteres() {
-		Documento documento = new Documento("Titu", "Corpo do teste");
-		when(dao.insertDocumento(documento)).thenReturn(1d);
-		//boolean criaDocumentoServico = service.insertDocumentoServico(documento);
-		//assertTrue(criaDocumentoServico);
-	}
-	
-	@Test
-	public void testQuandoCriaDocumentoTituloVazio() {
-		Documento documento = new Documento(null, "Corpo do teste");
-		when(dao.insertDocumento(documento)).thenReturn(1d);
-		//boolean criaDocumentoServico = service.insertDocumentoServico(documento);
-		//assertTrue(criaDocumentoServico);
-	}
-	@Test
-	public void testDeveListarTodosDocumentosRest() {
+	public void deveListarTodosDocumentosTest() {
 		List<Documento> documentos = new ArrayList<>();
 		service = new DocumentoServiceImpl();
 		documentos = service.getTodosDocumentos();
-		assertNotNull("Objeto nulo", documentos);;
+		assertEquals(8, documentos.size(), 0.01);
+		
+	}
+	
+	@Test
+	public void deveListarDocumentoPorIdTest() {
+		Documento documento = new Documento(1);
+		Documento documentoRetorno = new Documento();
+		service = new DocumentoServiceImpl();
+		documentoRetorno = service.getDocumentoPorId(1);
+		assertEquals(documento.getId(), documentoRetorno.getId());
+	}
+	
+	@Test
+	public void deveListarDocumentosPorFiltroDataInicialTest() {
+		Documento documento = new Documento(0, null, null, "2019-02-26 10:17:48", null);
+		List<Documento> documentos = new ArrayList<>();
+		service = new DocumentoServiceImpl();
+		documentos = service.getDocumentosPorIntervaloData(documento);
+		assertEquals(8d, documentos.size(), 0.01);
+	}
+	@Test
+	public void deveListarDocumentosPorFiltroDataFimTest() {
+		Documento documento = new Documento(0, null, null, null, "2019-02-26 13:54:52");
+		List<Documento> documentos = new ArrayList<>();
+		service = new DocumentoServiceImpl();
+		documentos = service.getDocumentosPorIntervaloData(documento);
+		assertEquals(6d, documentos.size(), 0.01);
+	}
+	
+	@Test
+	public void deveListarDocumentosPorIntervaloDataTest() {
+		Documento documento = new Documento(0, null, null, "2019-02-26 10:17:48", "2019-02-26 13:54:52");
+		List<Documento> documentos = new ArrayList<>();
+		service = new DocumentoServiceImpl();
+		documentos = service.getDocumentosPorIntervaloData(documento);
+		assertEquals(8d, documentos.size(), 0.01);
 		
 	}
 	@Test
-	public void testDeveFiltarDocumentoPorTitulo() {
-		Documento documento = new Documento();
+	public void deveFiltarDocumentoPorTituloTest() {
+		List<Documento> documentos = new ArrayList<>();
+		Documento documento = new Documento(0, null, "texto", null, null);
+		service = new DocumentoServiceImpl();
+		documentos = service.getDocumentosPorTituloOuTexto(documento);
+		assertEquals(8d, documentos.size(), 0.01);
+				
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void deveGerarUmaExcecaoAoFiltrarPorTituloTest() {
 		
+	}
+	
+	@Test
+	public void deveFiltrarDocumentoPorTextoTest() {
 		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testDeveGerarUmaExcecaoAoFiltrarPorTitulo() {
+	public void deveGerarUmaExcecaoAoFiltrarPorTextoTest() {
 		
 	}
 	
 	@Test
-	public void testDeveFiltrarDocumentoPorTextoTest() {
-		
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeveGerarUmaExcecaoAoFiltrarPorTexto() {
-		
-	}
-	
-	@Test
-	public void testDeveFiltrarDocumentoPorIntervaloDataTest() {
+	public void deveFiltrarDocumentoPorIntervaloDataTest() {
 		//List<Documento> documentos = service.getDocumentosPorIntervaloData();
 		//assertNotNull(documentos);
 	
 }
 	@Test(expected = IllegalArgumentException.class)
-	public void testDeveGerarExcecaoAoFiltrarPorIntervaloData() {
+	public void deveGerarExcecaoAoFiltrarPorIntervaloDataTest() {
 		 
 	}
 

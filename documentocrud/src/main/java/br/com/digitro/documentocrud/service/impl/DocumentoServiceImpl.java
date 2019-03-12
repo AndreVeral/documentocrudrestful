@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,10 +14,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.activity.InvalidActivityException;
 import javax.management.RuntimeErrorException;
 
 import br.com.digitro.documentocrud.dao.DocumentoDao;
 import br.com.digitro.documentocrud.dao.impl.DocumentoDaoImpl;
+import br.com.digitro.documentocrud.exception.ErrorInfo;
+import br.com.digitro.documentocrud.exception.InvalidInputException;
 import br.com.digitro.documentocrud.model.Documento;
 import br.com.digitro.documentocrud.service.DocumentoService;
 
@@ -24,18 +28,21 @@ public class DocumentoServiceImpl implements DocumentoService{
 
 	private DocumentoDao dao = new DocumentoDaoImpl();
 	private Documento documento =  new Documento();
+	private List<ErrorInfo> erros = new ArrayList<>();
+	private ErrorInfo erro;
 
 
 	public void setDao(DocumentoDao dao) {
 		this.dao = dao;
 	}
-	public void deveVerificarRegrasDeTitulo(Documento documento) {
-		deveVerificarCaracteresTitulo(documento);
-		deveVerificarTamanhoMinimoTitulo(documento);
-		deveVerificarTituloVazio(documento);
+	public void deveVerificarRegrasDeTitulo(Documento documento){
+		deveVerificarTamanhoMaximoTitulo(documento);
 		deveVerificarTituloNulo(documento);
 	}
-	public boolean deveVerificarTituloVazio(Documento documento) throws RuntimeException {
+	public void deveVerificarRegrasDeTexto(Documento documento) {
+		deveVerificarTamanhoMaximoTexto(documento);
+	}
+	public boolean deveVerificarTituloVazio(Documento documento) {
 		if(documento.getTitulo().isEmpty()) {
 			throw new RuntimeException("Título obrigatório");
 		}
@@ -56,6 +63,29 @@ public class DocumentoServiceImpl implements DocumentoService{
 		}
 		return false;
 	}
+	public boolean deveVerificarTamanhoMaximoTitulo(Documento documento) {
+		if (documento.getTitulo().length() >= 250) {
+			throw new RuntimeException("Título do documento deve ter no máximo 250 caracteres");
+		}
+		return false;
+	}
+	public boolean deveVerificarTamanhoMaximoTexto(Documento documento) {
+		if (documento.getTexto().length() >= 500) {
+			throw new RuntimeException("Texto do documento deve ter no máximo 500 caracteres");
+		}
+		return false;
+	}
+	public boolean deveVerificarFormatoData(Documento documento) {
+		String formatoPadraoData = "yyyy-MM-dd HH:mm:ss";
+		DateTimeFormatter formataData = DateTimeFormatter.ofPattern(formatoPadraoData);
+		try {
+			LocalDateTime.parse(documento.getDataCriacao(), formataData);
+			throw(new Exception("Data Inicial possui um formato inválido."));
+		}catch(Exception e) {
+			e.getMessage();
+		}
+		return true;
+	}
 	public boolean deveVerificarIdNegativo(Integer id){
 		if(id < 0) {
 			throw new RuntimeException("Id não pode ser negativo");	
@@ -64,7 +94,10 @@ public class DocumentoServiceImpl implements DocumentoService{
 	}
 	public boolean deveVerificarTituloNulo(Documento documento) {
 		if (documento.getTitulo() == null) {
-			throw new RuntimeException("Erro: Titulo não pode ser nulo.");
+			erro = new ErrorInfo("documento.titulo.formato.invalido", "Título está nulo.");
+			erros = new ArrayList<>();
+			erros.add(erro);
+			throw new InvalidInputException(erros);
 		}
 			return false;
 	}
@@ -73,6 +106,15 @@ public class DocumentoServiceImpl implements DocumentoService{
 			throw new RuntimeException("Erro: Titulo não pode ser nulo.");
 		}
 		return false;
+	}
+	
+	public void deveVerificarIdValido(Documento documento) {
+		if (documento == null) {
+			erro = new ErrorInfo("documento.id.inexistente", "Documento não encontrado.");
+			erros = new ArrayList<>();
+			erros.add(erro);
+			throw new InvalidInputException(erros);
+		}
 	}
 
 	//	public void deveFormatarData (Documento documento) {
@@ -94,8 +136,37 @@ public class DocumentoServiceImpl implements DocumentoService{
 	}
 	public Documento getDocumentoPorId(int id) {
 		Documento documento =  new Documento();
-
-		return null;
+		documento = dao.getDocumentoPorId(id);
+		deveVerificarIdValido(documento);
+		return documento;
+	}
+	
+	public List<Documento> getDocumentosPorData(Documento documento){
+		deveVerificarFormatoData(documento);
+		List<Documento> documentos = new ArrayList<>();
+		documentos = dao.getDocumentosPorData(documento);
+		return documentos;
+	}
+	public List<Documento> getDocumentosPorIntervaloData(Documento documento){
+		deveVerificarFormatoData(documento);
+		List<Documento> documentos = new ArrayList<>();
+		documentos = dao.getDocumentosPorIntervaloData(documento);
+		return documentos;
+		
+	}
+	public List<Documento> getDocumentosPorTituloOuTexto(Documento documento){
+		if (documento.getTitulo() != null) {
+			deveVerificarRegrasDeTitulo(documento);
+		}if(documento.getTexto() != null) {
+			deveVerificarRegrasDeTexto(documento);
+		}
+//		else {
+//			deveVerificarRegrasDeTitulo(documento);
+//			deveVerificarRegrasDeTexto(documento);
+//		}
+		List<Documento> documentos = new ArrayList<>();
+		documentos = dao.getDocumentosPorFiltroTituloTexto(documento);
+		return documentos;
 	}
 	public boolean insertDocumentoServico(Documento documento) {
 		if(dao.insertDocumento(documento) == 1) {

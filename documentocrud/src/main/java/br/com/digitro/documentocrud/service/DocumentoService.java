@@ -10,6 +10,9 @@ public interface DocumentoService {
 	
 	List<Documento> getTodosDocumentos();
 	Documento getDocumentoPorId(int id);
+	List<Documento> getDocumentosPorIntervaloData(Documento documento);
+	List<Documento> getDocumentosPorData(Documento documento);
+	List<Documento> getDocumentosPorTituloOuTexto(Documento documento);
 	boolean insertDocumentoServico(Documento documento);
 	boolean updateDocumentoServico(Documento documento);
 	boolean deleteDocumentoServico(int id);
